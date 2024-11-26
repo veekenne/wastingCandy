@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Four Rooms Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+        #game-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #description {
+            margin-bottom: 20px;
+        }
+        .option {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: gray;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .option:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <img id="background" src="" style="max-width: 100%; max-height: 80vh;" alt="Room Background">
+        <p id="description"></p>
+        <div id="options"></div>
+    </div>
+    <script>
+        // Game data
+        const rooms = {
+            "room1": {
+                "description": "You are in Room 1. Choose an action:",
+                "background": "https://veekenne.github.io/wastingCandy/room1.webp",
+                "options": [
+                    {"text": "Go to Room 2", "target": "room2"},
+                    
+                ]
+            },
+            "room2": {
+                "description": "You are in Room 2. Choose an action:",
+                "background": "https://veekenne.github.io/wastingCandy/room2.webp",
+                "options": [
+                    {"text": "Go to Room 1", "target": "room1"},
+                    {"text": "Go to Room 3", "target": "room3"}
+                ]
+            },
+            "room3": {
+                "description": "You are in Room 3. Choose an action:",
+                "background": "https://veekenne.github.io/wastingCandy/room3.webp",
+                "options": [
+                    {"text": "Go to Room 4", "target": "room4"}
+                ]
+            },
+            "room4": {
+                "description": "You are in Room 4. Choose an action:",
+                "background": "https://veekenne.github.io/wastingCandy/room4.webp",
+                "options": [
+                    {"text": "Go to Room 1", "target": "room1"}
+                ]
+            }
+        };
+
+        let currentRoom = "room1";
+
+        function renderRoom() {
+            const room = rooms[currentRoom];
+            document.getElementById("background").src = room.background;
+            document.getElementById("description").innerText = room.description;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            room.options.forEach(option => {
+                const button = document.createElement("div");
+                button.className = "option";
+                button.innerText = option.text;
+                button.onclick = () => {
+                    currentRoom = option.target;
+                    renderRoom();
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Initialize game
+        renderRoom();
+    </script>
+</body>
+</html>
